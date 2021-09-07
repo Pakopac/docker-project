@@ -16,14 +16,40 @@ services:
         # Create networks for communication
         networks:
             - front
-            - back
+            - db
+        # Restart on changes
+        restart: unless-stopped
+      
+    # db service
+    db:
+        # Get DockerFile for build
+        build: ./db
+        # Ports expose
+        ports:
+            - "3307:3307"
+
+        environment:
+          MYSQL_DATABASE: games
+          MYSQL_USER: ${SQL_USER}
+          MYSQL_PASSWORD: ${SQL_PASSWORD}
+          MYSQL_ROOT_PASSWORD: root 
+        # Create volume
+        volumes:
+            - ./db:/db
+        # Link with redis
+        depends_on:
+            - redis-container
+        # Create networks for communication
+        networks:
+            - front
+            - db
         # Restart on changes
         restart: unless-stopped
 
     redis-container:
         image: redis
         networks: 
-            - back
+            - db
 
 networks: 
     front:
@@ -32,4 +58,4 @@ networks:
             driver: default
             config:
                 - subnet: 172.16.238.0/24
-    back:
+    db:
