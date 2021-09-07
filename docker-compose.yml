@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+    # Web service
+    web:
+        # Get DockerFile for build
+        build: ./app
+        # Ports expose
+        ports:
+            - "5000:5000"
+        # Create volume
+        volumes:
+            - ./app:/app
+        # Link with redis
+        depends_on:
+            - redis-container
+        # Create networks for communication
+        networks:
+            - front
+            - back
+        # Restart on changes
+        restart: unless-stopped
+
+    redis-container:
+        image: redis
+        networks: 
+            - back
+
+networks: 
+    front:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.238.0/24
+    back:
