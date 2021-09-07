@@ -26,10 +26,10 @@ services:
         build: ./db
         # Ports expose
         ports:
-            - "3307:3307"
+            - "3306:3306"
 
         environment:
-          MYSQL_DATABASE: games
+          MYSQL_DATABASE: video_games
           MYSQL_USER: ${SQL_USER}
           MYSQL_PASSWORD: ${SQL_PASSWORD}
           MYSQL_ROOT_PASSWORD: root 
