@@ -26,16 +26,16 @@ services:
         build: ./db
         # Ports expose
         ports:
-            - "3306:3306"
-
-        environment:
-          MYSQL_DATABASE: video_games
-          MYSQL_USER: ${SQL_USER}
-          MYSQL_PASSWORD: ${SQL_PASSWORD}
-          MYSQL_ROOT_PASSWORD: root 
-        # Create volume
+          - "3306:3306"
+        command: --init-file /data/application/games.sql
         volumes:
-            - ./db:/db
+            - ./db/sql/games.sql:/data/application/games.sql
+        environment:
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: video_games
+            MYSQL_USER: test
+            MYSQL_PASSWORD: test
         # Link with redis
         depends_on:
             - redis-container

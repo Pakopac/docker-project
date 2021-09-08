@@ -1,6 +1,2 @@
 # Mysql image
-FROM mysql
-# Add a database
-ENV MYSQL_DATABASE database
-
-COPY ./sql/ /docker-entrypoint-initdb.d/
+FROM mysql:5.7
