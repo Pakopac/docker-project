@@ -5,5 +5,12 @@
 </head>
 <body>
     <h1>Home</h1>
+
+    <ul id="navigation">
+        {% for game in games %}
+            <li>{{ game.game_name }}  -  {{ game.genre_name }}</li>
+        {% endfor %}
+    </ul>
+    
 </body>
 </html>
