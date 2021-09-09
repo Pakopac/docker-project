@@ -72,10 +72,10 @@ Game_Publisher = Table('game_publisher', metadata,
 
 metadata.create_all(engine)
 
-games_names = session.query(Games, Genres).filter(Genres.c.id == Games.c.genre_id).all()
+games = session.query(Games, Genres).filter(Genres.c.id == Games.c.genre_id).all()
 # games_names = games_names.filter(Publisher.c.id == Game_Publisher.c.publisher_id).all()
 # games_names = session.query(Game).all()
-print(games_names)
+print(games)
 
 # games = session.query(Games, Genres, Publisher, Platform, Game_Platform).join(Genres, Games.c.genre_id == Genres.c.id).join(Game_Publisher, Games.c.id == Game_Publisher.c.game_id).join(Publisher, Publisher.c.id == Game_Publisher.c.publisher_id).join(Game_Platform, Game_Publisher.c.id == Game_Platform.c.game_publisher_id).join(Platform, Platform.c.id == Game_Platform.c.platform_id).all()
 # games = session.query(Games, Genres, Publisher, Platform, Game_Platform, Game_Publisher).filter(Games.c.genre_id == Genres.c.id, Games.c.id == Game_Publisher.c.game_id, Publisher.c.id == Game_Publisher.c.publisher_id,Game_Publisher.c.id == Game_Platform.c.game_publisher_id, Platform.c.id == Game_Platform.c.platform_id).all()
@@ -94,4 +94,4 @@ async def index(request: Request):
 
 @app.get("/list", response_class=HTMLResponse)
 async def list(request: Request):
-    return templates.TemplateResponse("list.html", {"request": request, "games": games_names})
+    return templates.TemplateResponse("list.html", {"request": request, "games": games})

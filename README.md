@@ -68,5 +68,65 @@ First you need to clone the repository:
 ```
 git clone git@github.com:Pakopac/docker-project.git
 ```
-...
+then:
+```
+cd project-docker
+```
+Make sure you have docker install with the corrects rights: https://docs.docker.com/get-docker/
 
+Make sure mysql is not running on port 3306, to shut down it:
+```
+sudo service mysql stop
+```
+
+You can build containers:
+```
+docker-compose build
+```
+The result:
+```
+Building db
+Step 1/1 : FROM mysql:5.7
+ ---> d54bd1054823
+
+Successfully built d54bd1054823
+Successfully tagged project-docker_db:latest
+Building web
+Step 1/6 : FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
+ ---> 86ade7dea2c7
+Step 2/6 : COPY requirements.txt .
+ ---> Using cache
+ ---> 0aea53f45231
+Step 3/6 : RUN pip install -r requirements.txt
+ ---> Using cache
+ ---> c604be5c44b0
+Step 4/6 : EXPOSE 5000
+ ---> Using cache
+ ---> 923d508fc995
+Step 5/6 : COPY . .
+ ---> 0905ac01d9ac
+Step 6/6 : CMD ["gunicorn", "app:app", "-w", "3", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:5000"]
+ ---> Running in d7937e0e1c2f
+Removing intermediate container d7937e0e1c2f
+ ---> 94af7a05a92b
+
+Successfully built 94af7a05a92b
+Successfully tagged project-docker_web:latest
+```
+And run:
+```
+docker-compose up -d
+```
+Check if your containers are running
+```
+docker ps
+```
+If you have something like this it's ok !
+```
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS          PORTS                               NAMES
+629a053ec5d4   project-docker_web   "gunicorn app:app -w…"   4 minutes ago   Up 22 seconds   80/tcp, 0.0.0.0:5000->5000/tcp      project-docker_web_1
+186ecaee81ed   project-docker_db    "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes    0.0.0.0:3306->3306/tcp, 33060/tcp   project-docker_db_1
+48024c68420c   redis                "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes    6379/tcp                            project-docker_redis-container_1
+```
+
+Check on your browser: http://localhost:5000/
