@@ -25,40 +25,39 @@ print('---------------------')
 print('- - - MySQL Docker Container Python connection ok - - - \n')
 print(engine.table_names())
 
-class Game(Base):
-    __tablename__ = 'game'
-    id = Column(Integer, primary_key=True)
-    game_name = Column(String)
-    genre_id = Column(Integer, ForeignKey('genre.id'))
-    game_genre = relationship('Genre')
+# class Game(Base):
+#     __tablename__ = 'game'
+#     id = Column(Integer, primary_key=True)
+#     game_name = Column(String)
+#     genre_id = Column(Integer)
 
-class Genre(Base):
-    __tablename__ = "genre"
-    id = Column(Integer, primary_key=True)
-    genre_name = Column(String)
+# class Genre(Base):
+#     __tablename__ = "genre"
+#     id = Column(Integer, primary_key=True)  
+#     genre_name = Column(String)
 
 
-# Games = Table('game', metadata,
-#     Column('id', Integer, primary_key=True, nullable=False),
-#     Column('genre_id', Integer, ForeignKey('genre.id')),
-#     Column('game_name', String(50)),
-# )
+Games = Table('game', metadata,
+    Column('id', Integer, primary_key=True, nullable=False),
+    Column('genre_id', Integer, ForeignKey('genre.id')),
+    Column('game_name', String(50)),
+)
 
-# Genres = Table('genre', metadata,
-#     Column('id', Integer, primary_key=True, nullable=False),
-#     Column('genre_name', String(50)),
-# )
+Genres = Table('genre', metadata,
+    Column('id', Integer, primary_key=True, nullable=False),
+    Column('genre_name', String(50)),
+)
 
-# Publisher = Table('publisher', metadata,
-#     Column('id', Integer, primary_key=True, nullable=False),
-#     Column('publisher_name', String(50)),
-# )
+Publisher = Table('publisher', metadata,
+    Column('id', Integer, primary_key=True, nullable=False),
+    Column('publisher_name', String(50)),
+)
 
-# Game_Publisher = Table('game_publisher', metadata,
-#     Column('id', Integer, primary_key=True, nullable=False),
-#     Column('game_id', Integer),
-#     Column('publisher_id', Integer),
-# )
+Game_Publisher = Table('game_publisher', metadata,
+    Column('id', Integer, primary_key=True, nullable=False),
+    Column('game_id', Integer),
+    Column('publisher_id', Integer),
+)
 
 # Platform = Table('platform', metadata,
 #     Column('id', Integer, primary_key=True, nullable=False),
@@ -73,8 +72,9 @@ class Genre(Base):
 
 metadata.create_all(engine)
 
-games_names = session.query(Game.genre_id).all()
-
+games_names = session.query(Games, Genres).filter(Genres.c.id == Games.c.genre_id).all()
+# games_names = games_names.filter(Publisher.c.id == Game_Publisher.c.publisher_id).all()
+# games_names = session.query(Game).all()
 print(games_names)
 
 # games = session.query(Games, Genres, Publisher, Platform, Game_Platform).join(Genres, Games.c.genre_id == Genres.c.id).join(Game_Publisher, Games.c.id == Game_Publisher.c.game_id).join(Publisher, Publisher.c.id == Game_Publisher.c.publisher_id).join(Game_Platform, Game_Publisher.c.id == Game_Platform.c.game_publisher_id).join(Platform, Platform.c.id == Game_Platform.c.platform_id).all()
@@ -91,3 +91,7 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/list", response_class=HTMLResponse)
+async def list(request: Request):
+    return templates.TemplateResponse("list.html", {"request": request, "games": games_names})

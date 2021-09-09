@@ -1,3 +1,26 @@
 h1 {
     color: green;
 }
+.container{
+    margin-top: 3rem;
+}
+
+.content{
+    padding-top: 3rem;
+    width: 1220px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin: auto;
+}
+
+.item{
+    border: 1px solid #656565;
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.category{
+    color: #008096;
+}
