@@ -1,4 +1,5 @@
 # Video Games List
+![Capture d’écran du 2021-09-09 15-05-04](https://user-images.githubusercontent.com/33722914/132691149-7811732d-93af-4c87-8d4e-2577892497b6.png)
 
 ## Presentation:
 Hello, this is a project named <b>video games list</b>, the goal of this project is to have a list of video games based on a <b>database</b> inside an application using <b>FastAPI</b>.
