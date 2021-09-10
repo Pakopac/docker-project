@@ -37,17 +37,21 @@ Run on port 3306
 │   ├── app.py
 │   ├── conn.py
 │   ├── Dockerfile
+│   ├── entrypoint.sh
 │   ├── requirements.txt
 │   ├── static
 │   │   └── styles.css
 │   └── templates
-│       └── index.html
+│       ├── index.html
+│       └── list.html
 ├── db
 │   ├── Dockerfile
 │   └── sql
 │       └── games.sql
 ├── docker-compose.yml
-└── README.md
+├── README.md
+└── test
+    └── test.sh
 ```
 
 * App Folder
@@ -62,6 +66,7 @@ Run on port 3306
     * sql with our database
 * docker-compose to run containers
 * README.md it's me
+* test folder for run tests
 
 
 ## Install
