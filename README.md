@@ -141,3 +141,9 @@ CONTAINER ID   IMAGE                COMMAND                  CREATED         STA
 ```
 
 Check on your browser: http://localhost:5000/
+
+## Docker-hub
+
+Get images from docker-hub\
+https://hub.docker.com/repository/docker/pakopac/video_games_app
+https://hub.docker.com/repository/docker/pakopac/video_games_db

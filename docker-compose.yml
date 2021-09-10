@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     # Web service
-    web:
+    app:
         # Get DockerFile for build
         build: ./app
         # Command run on start
@@ -18,7 +18,14 @@ services:
         # Create networks for communication
         networks:
             - front
-            - db
+            - db  
+        # Check health container
+        healthcheck:
+          test: ["CMD", "curl -f http://localhost:5000 || exit 1"]
+          timeout: 30s
+          interval: 1m
+          retries: 3
+        image: pakopac/video_games_app
       
     # DB service
     db:
@@ -48,6 +55,13 @@ services:
             - db
         # Restart on changes
         restart: unless-stopped
+        # Check health container
+        healthcheck:
+          test: ["CMD", "curl -f http://localhost:3306 || exit 1"]
+          timeout: 30s
+          interval: 1m
+          retries: 3
+        image: pakopac/video_games_db
 
     # redis container for db
     redis-container:
