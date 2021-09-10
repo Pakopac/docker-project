@@ -1,6 +1,7 @@
 from sqlalchemy import *
 import pymysql
 
+# Connect to db
 config = {
     'host': 'db',
     'port': 3306,

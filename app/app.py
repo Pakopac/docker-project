@@ -12,6 +12,7 @@ Base = declarative_base()
 
 import conn
 
+# Connect to db and make session for query
 engine = conn.engine
 connection = engine.connect()
 
@@ -25,18 +26,7 @@ print('---------------------')
 print('- - - MySQL Docker Container Python connection ok - - - \n')
 print(engine.table_names())
 
-# class Game(Base):
-#     __tablename__ = 'game'
-#     id = Column(Integer, primary_key=True)
-#     game_name = Column(String)
-#     genre_id = Column(Integer)
-
-# class Genre(Base):
-#     __tablename__ = "genre"
-#     id = Column(Integer, primary_key=True)  
-#     genre_name = Column(String)
-
-
+# Create sqlAlchemy tables
 Games = Table('game', metadata,
     Column('id', Integer, primary_key=True, nullable=False),
     Column('genre_id', Integer, ForeignKey('genre.id')),
@@ -72,26 +62,24 @@ Game_Publisher = Table('game_publisher', metadata,
 
 metadata.create_all(engine)
 
+# Query games
 games = session.query(Games, Genres).filter(Genres.c.id == Games.c.genre_id).all()
-# games_names = games_names.filter(Publisher.c.id == Game_Publisher.c.publisher_id).all()
-# games_names = session.query(Game).all()
-print(games)
 
-# games = session.query(Games, Genres, Publisher, Platform, Game_Platform).join(Genres, Games.c.genre_id == Genres.c.id).join(Game_Publisher, Games.c.id == Game_Publisher.c.game_id).join(Publisher, Publisher.c.id == Game_Publisher.c.publisher_id).join(Game_Platform, Game_Publisher.c.id == Game_Platform.c.game_publisher_id).join(Platform, Platform.c.id == Game_Platform.c.platform_id).all()
-# games = session.query(Games, Genres, Publisher, Platform, Game_Platform, Game_Publisher).filter(Games.c.genre_id == Genres.c.id, Games.c.id == Game_Publisher.c.game_id, Publisher.c.id == Game_Publisher.c.publisher_id,Game_Publisher.c.id == Game_Platform.c.game_publisher_id, Platform.c.id == Game_Platform.c.platform_id).all()
-
-# print(games)
-
+# Start app
 app = FastAPI()
 
+# Link static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# Link templates files
 templates = Jinja2Templates(directory="templates")
 
+# Route '/' Home
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+# Route '/list' List Games
 @app.get("/list", response_class=HTMLResponse)
 async def list(request: Request):
     return templates.TemplateResponse("list.html", {"request": request, "games": games})

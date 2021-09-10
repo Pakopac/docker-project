@@ -4,6 +4,7 @@ services:
     web:
         # Get DockerFile for build
         build: ./app
+        # Command run on start
         command: gunicorn app:app -w 3 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000
         # Ports expose
         ports:
@@ -19,16 +20,19 @@ services:
             - front
             - db
       
-    # db service
+    # DB service
     db:
         # Get DockerFile for build
         build: ./db
+        # Command run on start
+        command: --init-file /docker-entrypoint-initdb.d/games.sql
         # Ports expose
         ports:
           - "3306:3306"
-        command: --init-file /docker-entrypoint-initdb.d/games.sql
+        # Create volume
         volumes:
             - ./db/sql/games.sql:/docker-entrypoint-initdb.d/games.sql
+        # Create env variable for db connexion
         environment:
             MYSQL_ROOT_USER: root
             MYSQL_ROOT_PASSWORD: secret
@@ -45,11 +49,13 @@ services:
         # Restart on changes
         restart: unless-stopped
 
+    # redis container for db
     redis-container:
         image: redis
         networks: 
             - db
 
+# Create networks for communication
 networks: 
     front:
         driver: bridge
