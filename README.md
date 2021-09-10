@@ -142,6 +142,41 @@ CONTAINER ID   IMAGE                COMMAND                  CREATED         STA
 
 Check on your browser: http://localhost:5000/
 
+## Test
+Run tests to check if yours containers are ok
+```
+sh test/test.sh
+```
+You need to have something like that
+```
+--- Docker Container ---
+CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS                            PORTS                               NAMES
+39cffdde787e   pakopac/video_games_db    "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes (health: starting)   0.0.0.0:3306->3306/tcp, 33060/tcp   video_games_db_1
+c186840aafc4   pakopac/video_games_app   "./entrypoint.sh gun…"   2 minutes ago   Up 2 minutes (health: starting)   80/tcp, 0.0.0.0:5000->5000/tcp      video_games_app_1
+9f96d4b65729   redis                     "docker-entrypoint.s…"   3 minutes ago   Up 2 minutes                      6379/tcp                            video_games_redis-container_1
+--- DB ---
+[2021-09-10 12:14:56 +0000] [77] [INFO] Booting worker with pid: 77
+[2021-09-10 12:15:05 +0000] [75] [INFO] Started server process [75]
+[2021-09-10 12:15:05 +0000] [75] [INFO] Waiting for application startup.
+[2021-09-10 12:15:05 +0000] [75] [INFO] Application startup complete.
+[2021-09-10 12:15:05 +0000] [77] [INFO] Started server process [77]
+[2021-09-10 12:15:05 +0000] [77] [INFO] Waiting for application startup.
+[2021-09-10 12:15:05 +0000] [77] [INFO] Application startup complete.
+[2021-09-10 12:15:05 +0000] [76] [INFO] Started server process [76]
+[2021-09-10 12:15:05 +0000] [76] [INFO] Waiting for application startup.
+[2021-09-10 12:15:05 +0000] [76] [INFO] Application startup complete.
+--- APP ---
+2021-09-10T12:14:53.240940Z 0 [Note]   - '::' resolves to '::';
+2021-09-10T12:14:53.241114Z 0 [Note] Server socket created on IP: '::'.
+2021-09-10T12:14:53.242438Z 0 [Note] InnoDB: Buffer pool(s) load completed at 210910 12:14:53
+2021-09-10T12:14:53.299882Z 0 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2021-09-10T12:14:53.308168Z 0 [Note] Event Scheduler: Loaded 0 events
+2021-09-10T12:14:53.308272Z 0 [Note] Execution of init_file '/docker-entrypoint-initdb.d/games.sql' started.
+2021-09-10T12:15:05.150042Z 0 [Note] Execution of init_file '/docker-entrypoint-initdb.d/games.sql' ended.
+2021-09-10T12:15:05.150459Z 0 [Note] mysqld: ready for connections.
+Version: '5.7.33'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
+```
+
 ## Docker-hub
 
 Get images from docker-hub\
