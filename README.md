@@ -78,6 +78,16 @@ Make sure mysql is not running on port 3306, to shut down it:
 ```
 sudo service mysql stop
 ```
+Create .env file with username and password for the database:
+```
+touch .env
+```
+```
+.env
+
+SQL_USER=your_username
+SQL_PASSWORD=your_password
+```
 
 You can build containers:
 ```
