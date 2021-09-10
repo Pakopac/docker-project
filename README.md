@@ -4,6 +4,9 @@
 ## Presentation:
 Hello, this is a project named <b>video games list</b>, the goal of this project is to have a list of video games based on a <b>database</b> inside an application using <b>FastAPI</b>.
 This project is split in two <b>docker container</b>: application and db, with a docker-compose.
+
+![schema](https://user-images.githubusercontent.com/33722914/132901680-4455acb5-acd3-43be-9384-1a3da336b3f0.png)
+
 ### APP:
 Web application FastAPI with:
 * Route home on '/'
