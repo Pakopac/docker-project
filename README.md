@@ -34,6 +34,9 @@ MySQL Database
 ```
 Run on port 3306
 
+### NGINX
+Proxy reverse with nginx run on port 80
+
 ## Architecture:
 ```
 ├── app
@@ -53,8 +56,9 @@ Run on port 3306
 │       └── games.sql
 ├── docker-compose.yml
 ├── README.md
-└── test
-    └── test.sh
+├── test
+│   └── test.sh
+├── nginx.conf
 ```
 
 * App Folder
@@ -70,6 +74,7 @@ Run on port 3306
 * docker-compose to run containers
 * README.md it's me
 * test folder for run tests
+* nginx.conf with the configuration nginx
 
 
 ## Install
@@ -190,3 +195,7 @@ Version: '5.7.33'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Comm
 Get images from docker-hub\
 https://hub.docker.com/repository/docker/pakopac/video_games_app
 https://hub.docker.com/repository/docker/pakopac/video_games_db
+
+## Heroku Deploiement - Working Progress...
+App and databases are on heroku but it's not working for now. \
+https://video-games-app1.herokuapp.com/
