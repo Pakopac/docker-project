@@ -4,4 +4,6 @@ build:
     sql: /db/Dockerfile.sql
     nginx: /nginx/Dockerfile.nginx
 run:
-  web: docker-compose up -d
+  app: gunicorn app:app -w 3 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000
+  sql: --init-file /docker-entrypoint-initdb.d/games.sql
+  
