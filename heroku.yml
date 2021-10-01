@@ -1,7 +1,7 @@
 build:
   docker:
-    app: Dockerfile
-    sql: DockerFile
-    nginx: DockerFile
+    app: Dockerfile.app
+    sql: DockerFile.sql
+    nginx: DockerFile.nginx
 run:
   web: docker-compose up -d
