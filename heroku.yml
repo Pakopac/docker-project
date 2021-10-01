@@ -2,4 +2,4 @@ build:
   docker:
     app: /app/Dockerfile.app
 run:
-  app:gunicorn -w 4 -b 0.0.0.0:$PORT -k gevent main:app
+  app: gunicorn app:app -w 3 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:$PORT 
