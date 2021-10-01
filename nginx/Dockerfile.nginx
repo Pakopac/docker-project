@@ -1,0 +1,2 @@
+# Get Nginx image
+FROM nginx:alpine
