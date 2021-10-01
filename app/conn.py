@@ -2,12 +2,19 @@ from sqlalchemy import *
 import pymysql
 
 # Connect to db
+# config = {
+#     'host': 'db',
+#     'port': 3306,
+#     'user': 'test',
+#     'password': 'test',
+#     'database': 'video_games'
+# }
 config = {
-    'host': 'db',
+    'host': 'eu-cdbr-west-01.cleardb.net',
     'port': 3306,
-    'user': 'test',
-    'password': 'test',
-    'database': 'video_games'
+    'user': 'b44454776dfafc',
+    'password': 'c62228ff',
+    'database': 'heroku_58458fb64bf2299'
 }
 
 db_user = config.get('user')
