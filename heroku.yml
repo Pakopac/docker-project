@@ -1,8 +1,6 @@
 build:
   docker:
     app: /app/Dockerfile.app
-    db: /db/Dockerfile.db
     nginx: /nginx/Dockerfile.nginx
 run:
   app: gunicorn app:app -w 3 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000
-  db: --init-file /db/sql/games.sql
