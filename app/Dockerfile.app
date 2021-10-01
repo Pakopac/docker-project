@@ -16,3 +16,4 @@ COPY . .
 COPY entrypoint.sh .
 
 ENTRYPOINT ["./entrypoint.sh"]
+CMD ["gunicorn app:app -w 3 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000" ]
