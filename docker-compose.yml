@@ -1,17 +1,19 @@
 version: '3.3'
 services:
     # Web service
-    web:
+    app:
         # Get DockerFile for build
-        build: ./web
+        build: ./app
+        run:
+          web: uvicorn main:app --reload --host 0.0.0.0 --port 5000
         # Command run on start
-        command: gunicorn web:web -w 3 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000
+        command: gunicorn app:app -w 3 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000
         # Ports expose
         ports:
             - "5000:5000"
         # Create volume
         volumes:
-            - ./web:/web
+            - ./app:/app
         # Link with redis
         depends_on:
             - redis-container
@@ -26,7 +28,7 @@ services:
           timeout: 30s
           interval: 1m
           retries: 3
-        image: pakopac/video_games_web
+        image: pakopac/video_games_app
       
     # DB service
     db:
@@ -68,7 +70,7 @@ services:
       image: nginx:alpine
       container_name: nginx
       depends_on: 
-        - web
+        - app
       ports:
         - "80:80"
       volumes:
