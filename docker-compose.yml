@@ -68,7 +68,7 @@ services:
       image: nginx:alpine
       container_name: nginx
       depends_on: 
-        - app
+        - web
       ports:
         - "80:80"
       volumes:
