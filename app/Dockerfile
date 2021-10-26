@@ -13,6 +13,6 @@ EXPOSE 5000
 
 # Entrypoint for waiting connexion with db before run
 COPY . .
-COPY entrypoint.sh .
+# COPY entrypoint.sh .
 
-ENTRYPOINT ["./entrypoint.sh"]
+# ENTRYPOINT ["./entrypoint.sh"]
