@@ -25,8 +25,8 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.IMAGE }}:latest \
-            --file ./project/Dockerfile.prod \
-            "./project"
+            --file ./app/Dockerfile.prod \
+            "./app"
       - name: Push image
         run: |
           docker push ${{ env.IMAGE }}:latest
@@ -49,8 +49,8 @@ jobs:
           docker build \
           --cache-from ${{ env.IMAGE }}:latest \
           --tag ${{ env.IMAGE }}:latest \
-          --file ./project/Dockerfile.prod \
-          "./project"
+          --file ./app/Dockerfile.prod \
+          "./app"
       - name: Run container
         run: |
           docker run \
@@ -91,8 +91,8 @@ jobs:
           docker build \
           --cache-from ${{ env.IMAGE }}:latest \
           --tag ${{ env.HEROKU_REGISTRY_IMAGE }}:latest \
-          --file ./project/Dockerfile.prod \
-          "./project"
+          --file ./app/Dockerfile.prod \
+          "./app"
       - name: Log in to the Heroku Container Registry
         run: docker login -u _ -p ${HEROKU_AUTH_TOKEN} registry.heroku.com
         env:
