@@ -55,20 +55,20 @@ jobs:
         run: |
           docker run \
             -d \
-            --name video_games_app_1 \
+            --name app \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
             -e DATABASE_TEST_URL=sqlite://sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
-      - name: Pytest
-        run: docker exec video_games_app_1 python -m pytest .
-      - name: Flake8
-        run: docker exec video_games_app_1 python -m flake8 .
-      - name: Black
-        run: docker exec video_games_app_1 python -m black . --check
-      - name: isort
-        run: docker exec video_games_app_1 python -m isort . --check-only
+      # - name: Pytest
+      #   run: docker exec app python -m pytest .
+      # - name: Flake8
+      #   run: docker exec app python -m flake8 .
+      # - name: Black
+      #   run: docker exec app python -m black . --check
+      # - name: isort
+      #   run: docker exec app python -m isort . --check-only
   deploy:
     name: Deploy to Heroku
     runs-on: ubuntu-latest
