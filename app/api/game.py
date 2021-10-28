@@ -7,6 +7,9 @@ from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.dialects.mysql import MEDIUMTEXT, MEDIUMBLOB
 from sqlalchemy.ext.declarative import declarative_base
 
+from models.game import Games
+from models.genre import Genres
+
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
@@ -29,44 +32,10 @@ print('---------------------')
 print('- - - MySQL Docker Container Python connection ok - - - \n')
 print(engine.table_names())
 
-# Create sqlAlchemy tables
-Games = Table('game', metadata,
-    Column('id', Integer, primary_key=True, nullable=False),
-    Column('genre_id', Integer, ForeignKey('genre.id')),
-    Column('game_name', String(50)),
-)
-
-Genres = Table('genre', metadata,
-    Column('id', Integer, primary_key=True, nullable=False),
-    Column('genre_name', String(50)),
-)
-
-Publisher = Table('publisher', metadata,
-    Column('id', Integer, primary_key=True, nullable=False),
-    Column('publisher_name', String(50)),
-)
-
-Game_Publisher = Table('game_publisher', metadata,
-    Column('id', Integer, primary_key=True, nullable=False),
-    Column('game_id', Integer),
-    Column('publisher_id', Integer),
-)
-
-# Platform = Table('platform', metadata,
-#     Column('id', Integer, primary_key=True, nullable=False),
-#     Column('platform_name', String(50)),
-# )
-
-# Game_Platform = Table('game_platform', metadata,
-#     Column('game_publisher_id', Integer),
-#     Column('platform_id', Integer),
-#     Column('release_year', Integer),
-# )
-
 metadata.create_all(engine)
 
 # Query games
-games = session.query(Games, Genres).filter(Genres.c.id == Games.c.genre_id).all()
+games = session.query(Games, Genres).filter(Genres.id == Games.genre_id).all()
 
 @router.get("/all", response_class=HTMLResponse)
 async def all(request: Request):
