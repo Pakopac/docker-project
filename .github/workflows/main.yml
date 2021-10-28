@@ -61,14 +61,14 @@ jobs:
             -e DATABASE_TEST_URL=sqlite://sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
-      # - name: Pytest
-      #   run: docker exec game-list python -m pytest .
-      # - name: Flake8
-      #   run: docker exec game-list python -m flake8 .
-      # - name: Black
-      #   run: docker exec game-list python -m black . --check
-      # - name: isort
-      #   run: docker exec game-list python -m isort . --check-only
+      - name: Pytest
+        run: docker exec game-list python -m pytest .
+      - name: Flake8
+        run: docker exec game-list python -m flake8 .
+      - name: Black
+        run: docker exec game-list python -m black . --check
+      - name: isort
+        run: docker exec game-list python -m isort . --check-only
   deploy:
     name: Deploy to Heroku
     runs-on: ubuntu-latest
