@@ -5,3 +5,4 @@ sqlalchemy
 pymysql
 gunicorn
 gevent
+pytest==6.2.4
