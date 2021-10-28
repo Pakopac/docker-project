@@ -39,4 +39,9 @@ games = session.query(Games, Genres).filter(Genres.id == Games.genre_id).all()
 
 @router.get("/all", response_class=HTMLResponse)
 async def all(request: Request):
-    return templates.TemplateResponse("list.html", {"request": request, "games": games})
+    return templates.TemplateResponse("games/list.html", {"request": request, "games": games})
+
+@router.get("/{id}/", response_class=HTMLResponse)
+async def one(request: Request):
+    game = session.query(Games).get(id)
+    return templates.TemplateResponse("games/game.html", {"request": request, "game": game})

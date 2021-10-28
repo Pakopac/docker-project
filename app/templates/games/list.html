@@ -21,9 +21,10 @@
 
         <div class="d-flex flex-wrap">
             {% for game in games %}
-                <div class="item">
+                <a href="/games/{{ game.Games.id }}" class="item">
                     <span class="category">Names</span>: {{ game.Games.game_name }}  <br>  <span class="category">Gender</span>: {{ game.Genres.genre_name }}
-                </div>
+
+                </a>
             {% endfor %}
         </div>
     </div>
