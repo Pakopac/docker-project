@@ -8,6 +8,7 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
 
+
 @router.get("/ping")
 async def pong(settings: Settings = Depends(get_settings)):
     return {
