@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
@@ -30,7 +30,6 @@ metadata = MetaData()
 
 print('---------------------')
 print('- - - MySQL Docker Container Python connection ok - - - \n')
-print(engine.table_names())
 
 metadata.create_all(engine)
 
@@ -44,5 +43,7 @@ async def all(request: Request):
 @router.get("/{id}/", response_class=HTMLResponse)
 async def one(id: int, request: Request):
     game = session.query(Games, Genres).filter(Games.id == id).filter(Genres.id == Games.genre_id).first()
-    print(game)
-    return templates.TemplateResponse("games/game.html", {"request": request, "game": game})
+    if game:
+        return templates.TemplateResponse("games/game.html", {"request": request, "game": game})
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")

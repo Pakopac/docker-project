@@ -17,10 +17,14 @@
           </ul>
     </nav>
     <div class="content">
+        {% if game %}
         <h1>{{ game.Games.game_name }}</h1>
+        {% endif %}
         <div class="d-flex flex-wrap">
-                <div class="item">
+                <div class="item">    
+                    {% if game %}  
                     <span class="category">Names</span>: {{ game.Games.game_name }}  <br>  <span class="category">Gender</span>:  {{ game.Genres.genre_name }} 
+                    {% endif %}
                 </div>
         </div>
     </div>
