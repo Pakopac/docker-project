@@ -42,6 +42,7 @@ async def all(request: Request):
     return templates.TemplateResponse("games/list.html", {"request": request, "games": games})
 
 @router.get("/{id}/", response_class=HTMLResponse)
-async def one(request: Request):
-    game = session.query(Games).get(id)
+async def one(id: int, request: Request):
+    game = session.query(Games, Genres).filter(Games.id == id).filter(Genres.id == Games.genre_id).first()
+    print(game)
     return templates.TemplateResponse("games/game.html", {"request": request, "game": game})

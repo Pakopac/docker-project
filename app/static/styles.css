@@ -23,4 +23,17 @@ h1 {
 
 .category{
     color: #008096;
+    text-decoration: none;
+}
+.value{
+    color: black;
+}
+
+a{
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+a:hover{
+   background: #dae5ff;
+   text-decoration: none;
 }
