@@ -3,14 +3,15 @@
 
 ## Presentation:
 Hello, this is a project named <b>video games list</b>, the goal of this project is to have a list of video games based on a <b>database</b> inside an application using <b>FastAPI</b>.
-This project is split in two <b>docker container</b>: application and db, with a docker-compose.
+This project is split in three <b>docker container</b>: application, db and nginx, with a docker-compose.
 
 ![schema](https://user-images.githubusercontent.com/33722914/132901680-4455acb5-acd3-43be-9384-1a3da336b3f0.png)
 
 ### APP:
 Web application FastAPI with:
 * Route home on '/'
-* Route video games list on '/list'
+* Route video games list on '/games/all'
+* Route video game detail '/games/1'
 * Get from db with sqlAlchemy
 * Templates with Jinja
 * Run on port 5000
@@ -40,32 +41,120 @@ Proxy reverse with nginx run on port 80
 ## Architecture:
 ```
 ├── app
+│   ├── api
+│   │   ├── game.py
+│   │   ├── home.py
+│   │   ├── __init__.py
+│   │   ├── ping.py
+│   │   └── __pycache__
+│   │       ├── game.cpython-37.pyc
+│   │       ├── games.cpython-37.pyc
+│   │       ├── home.cpython-37.pyc
+│   │       ├── __init__.cpython-37.pyc
+│   │       └── ping.cpython-37.pyc
 │   ├── app.py
+│   ├── config.py
 │   ├── conn.py
+│   ├── core
 │   ├── Dockerfile
+│   ├── Dockerfile.app
 │   ├── entrypoint.sh
+│   ├── htmlcov
+│   │   ├── app_py.html
+│   │   ├── config_py.html
+│   │   ├── conn_py.html
+│   │   ├── coverage_html.js
+│   │   ├── d_10fae538ba4e8521_game_py.html
+│   │   ├── d_10fae538ba4e8521_home_py.html
+│   │   ├── d_10fae538ba4e8521___init___py.html
+│   │   ├── d_10fae538ba4e8521_ping_py.html
+│   │   ├── d_a44f0ac069e85531_conftest_py.html
+│   │   ├── d_a44f0ac069e85531___init___py.html
+│   │   ├── d_a44f0ac069e85531_test_games_py.html
+│   │   ├── d_a44f0ac069e85531_test_home_py.html
+│   │   ├── d_a44f0ac069e85531_test_ping_py.html
+│   │   ├── d_e634d7a1dd90e049_game_py.html
+│   │   ├── d_e634d7a1dd90e049_genre_py.html
+│   │   ├── d_e634d7a1dd90e049___init___py.html
+│   │   ├── favicon_32.png
+│   │   ├── index.html
+│   │   ├── __init___py.html
+│   │   ├── jquery.ba-throttle-debounce.min.js
+│   │   ├── jquery.hotkeys.js
+│   │   ├── jquery.isonscreen.js
+│   │   ├── jquery.min.js
+│   │   ├── jquery.tablesorter.min.js
+│   │   ├── keybd_closed.png
+│   │   ├── keybd_open.png
+│   │   ├── status.json
+│   │   └── style.css
+│   ├── __init__.py
+│   ├── models
+│   │   ├── game.py
+│   │   ├── genre.py
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       ├── game.cpython-37.pyc
+│   │       ├── genre.cpython-37.pyc
+│   │       └── __init__.cpython-37.pyc
+│   ├── __pycache__
+│   │   ├── app2.cpython-37.pyc
+│   │   ├── app.cpython-37.pyc
+│   │   ├── config.cpython-37.pyc
+│   │   ├── conn.cpython-37.pyc
+│   │   └── __init__.cpython-37.pyc
 │   ├── requirements.txt
 │   ├── static
 │   │   └── styles.css
-│   └── templates
-│       ├── index.html
-│       └── list.html
+│   ├── templates
+│   │   ├── games
+│   │   │   ├── game.html
+│   │   │   └── list.html
+│   │   └── index.html
+│   └── tests
+│       ├── conftest.py
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── conftest.cpython-37-pytest-6.2.4.pyc
+│       │   ├── __init__.cpython-37.pyc
+│       │   ├── test_games.cpython-37-pytest-6.2.4.pyc
+│       │   ├── test_home.cpython-37-pytest-6.2.4.pyc
+│       │   ├── test_ping.cpython-37-pytest-6.2.4.pyc
+│       │   └── test_summaries.cpython-37-pytest-6.2.4.pyc
+│       ├── test_games.py
+│       ├── test_home.py
+│       └── test_ping.py
 ├── db
 │   ├── Dockerfile
+│   ├── Dockerfile.db
 │   └── sql
 │       └── games.sql
 ├── docker-compose.yml
-├── README.md
-├── test
-│   └── test.sh
+├── heroku.yml
+├── letsencrypt
+│   └── certs
+├── nginx
+│   └── Dockerfile.nginx
 ├── nginx.conf
+├── Procfile
+├── project
+├── README.md
+├── release.sh
+├── setup.cfg
+└── test
+    └── test.sh
 ```
-
 * App Folder
     * app.py with application
-    * conn.py for sqlAlchemy connextion with db
+    * api folder with router
+    * config.py with config for router
+    * conn.py for sqlAlchemy connexion with db
     * Dockerfile build by docker-compose
+    * Dockerfile.app dockerfile for heroku
     * requirements.txt to install modules needed
+    * models folder with models for sqlalchemy
+    * htmlcov with coverage report
+    * tests folder for pytest
     * static with styles files
     * templates with html files
 * DB folder
@@ -75,6 +164,9 @@ Proxy reverse with nginx run on port 80
 * README.md it's me
 * test folder for run tests
 * nginx.conf with the configuration nginx
+* .coveragerc for coverage config 
+* heroku.yml for heroku config
+* release.sh for deploy heroku
 
 
 ## Install
@@ -101,6 +193,7 @@ touch .env
 
 SQL_USER=your_username
 SQL_PASSWORD=your_password
+PORT=5000
 ```
 
 You can build containers:
@@ -196,6 +289,25 @@ Get images from docker-hub\
 https://hub.docker.com/repository/docker/pakopac/video_games_app
 https://hub.docker.com/repository/docker/pakopac/video_games_db
 
-## Heroku Deploiement - Working Progress...
-App and databases are on heroku but it's not working for now. \
+## Heroku Deploiement
+App and databases are on heroku. \
 https://video-games-app1.herokuapp.com/
+
+## Coverage/Quality
+You can run come tests
+### Pytest
+```
+docker-compose exec web python -m pytest --cov="."
+```
+### Flake
+```
+docker-compose exec web flake8 .
+```
+### Black
+```
+docker-compose exec web black .
+```
+### Isort
+```
+docker-compose exec web isort .
+```
