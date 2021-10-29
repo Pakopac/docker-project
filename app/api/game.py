@@ -45,6 +45,7 @@ async def all(request: Request):
 
 @router.get("/{id}/", response_class=HTMLResponse)
 async def one(id: int, request: Request):
+    session.rollback()
     game = (
         session.query(Games, Genres)
         .filter(Games.id == id)

@@ -29,11 +29,11 @@ h1 {
     color: black;
 }
 
-a{
+.flex-wrap a{
     transition: all 0.2s ease-in-out;
     text-decoration: none;
 }
-a:hover{
+.flex-wrap a:hover{
    background: #dae5ff;
    text-decoration: none;
 }
